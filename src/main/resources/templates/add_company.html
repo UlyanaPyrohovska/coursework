@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headlinks :: headFragment">
+    <title id="pageTitle">Add company</title>
+</head>
+<body>
+<div th:insert="fragments/header :: headerFragment"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:insert="fragments/side_menu :: sideMenuFragment"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Company form</h4>
+                <form th:method="post" th:object="${company}" th:action="@{/create-company}" class="needs-validation" novalidate="">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="name">Name</label>
+                            <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="" required="">
+                            <div th:if="${#fields.hasErrors('name')}" class="error">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                        <input type="email"  name="email" th:field="*{email}" class="form-control" id="email" placeholder="you@example.com">
+                        <div th:if="${#fields.hasErrors('email')}" class="error">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('email')}" th:text="${err}" class="error"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address">Address</label>
+                        <input type="text"  name="address" th:field="*{address}" class="form-control" id="address" placeholder="1234 Main St" required="">
+                        <div th:if="${#fields.hasErrors('address')}" class="error">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('address')}" th:text="${err}" class="error"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Add a company</button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headlinks :: headFragment">
+    <title id="pageTitle">Specialities</title>
+</head>
+<body>
+<div th:insert="fragments/header :: headerFragment"></div>
+<div th:switch="${specialities}" class="container-fluid">
+    <div class="row">
+        <div th:insert="fragments/side_menu :: sideMenuFragment"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <h2>Specialities</h2>
+            <h2 th:case="null">No users found!</h2>
+            <table th:case="*" class="table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th_filter" style="min-width: 50px">ID</th>
+                    <th scope="col" class="th_filter">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="onespeciality : ${specialities}">
+                    <td th:text="${onespeciality.id}" class="align-middle" scope="row"></td>
+                    <td th:text="${onespeciality.name}" class="align-middle"></td>
+                    <td class="align-middle">
+                        <div class="row justify-content-center">
+                            <form th:action="@{speciality-update/{id}(id=${onespeciality.id})}" ><button type="submit" class="btn btn-success"><i class="bi bi-pencil-fill"></i></button></form>
+                            <form th:action="@{speciality-delete/{id}(id=${onespeciality.id})}" th:method="delete">
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="add-pos">
+                <form  th:object="${speciality}" th:action="@{/create-speciality}" th:method="post" class="needs-validation" novalidate="">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="name">Name</label>
+                            <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="" required="">
+                            <div th:if="${#fields.hasErrors('name')}" class="error">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Add a speciality</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

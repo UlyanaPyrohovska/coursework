@@ -1,0 +1,63 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headlinks :: headFragment">
+    <title id="pageTitle">Add vacancy</title>
+</head>
+<body>
+<div th:insert="fragments/header :: headerFragment"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:insert="fragments/side_menu :: sideMenuFragment"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Vacancy form</h4>
+                <form th:method="post" th:object="${vacancy}" th:action="@{/vacancy-update}"  class="needs-validation" novalidate="">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label for="salary">Salary</label>
+                        <input th:field="*{salary}" type="text" class="form-control" name="salary" id="salary" placeholder="Apartment or suite">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="speciality">Speciality</label>
+                            <select class="custom-select d-block w-100" name="speciality" id="speciality" required="">
+                                <option th:value="${0}" th:utext="Choose..."></option>
+                                <option th:each="speciality : ${specialities}" th:value="${speciality.id}" th:utext="${speciality.name}" th:selected="${speciality.id == vacancy.speciality.id}"></option>
+                            </select>
+                            <div th:if="${err2}" class="error">
+                                Please select a valid speciality.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="position">Position name</label>
+                            <select class="custom-select d-block w-100" name="position" id="position" required="">
+                                <option th:value="${0}" th:utext="Choose..."></option>
+                                <option th:each="position : ${positions}" th:value="${position.id}" th:utext="${position.name}" th:selected="${position.id == vacancy.position.id}"></option>
+                            </select>
+                            <div th:if="${err1}" class="error">
+                                Please select a valid position.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="company">Company name</label>
+                            <select class="custom-select d-block w-100" name="company" id="company" required="">
+                                <option th:value="${0}" th:utext="Choose..."></option>
+                                <option th:each="company : ${companies}" th:value="${company.id}" th:utext="${company.name}" th:selected="${company.id == vacancy.company.id}"></option>
+                            </select>
+                            <div th:if="${err3}" class="error">
+                                Please select a valid company.
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Add a vacancy</button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
